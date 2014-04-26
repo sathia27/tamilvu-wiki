@@ -1,5 +1,6 @@
 class Word < ActiveRecord::Base
-  scope :uploadable, ->{ where(:uploaded_to_wiki => false, :existing_in_wiki => false) } 
+  scope :uploadable, ->{ where(:uploaded_to_wiki => false, :existing_in_wiki => false) }
+  has_many :word_details
 
   def self.upload_to_wiki
     tamilvu = MediaWiki::Gateway.new("http://ta.wiktionary.org/w/api.php")
