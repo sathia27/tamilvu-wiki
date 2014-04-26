@@ -1,0 +1,18 @@
+<table class="table table-hover table-bordered">
+  <thead>
+  <tr>
+    <th>Word</th>
+    <th>Uploaded to Wiktionary</th>
+    <th>Wiktionary Link</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @words.each do |w| %>
+    <tr>
+      <th><%= w.name %></th>
+      <th><%= w.uploaded_to_wiki %></th>
+      <th><%= link_to "https://ta.wiktionary.org/wiki/#{w.name}", "https://ta.wiktionary.org/wiki/#{w.name}"  %></th>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
