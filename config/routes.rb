@@ -4,6 +4,7 @@ TamilvuWiki::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'home#index'
+  get 'words' => 'home#words'
   post 'home/upload_to_wiki'
   post 'home/scrap_from_tamilvu'
 

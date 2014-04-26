@@ -15,4 +15,8 @@ class HomeController < ApplicationController
     scrapping.delay.start
     redirect_to root_path
   end
+
+  def words
+    @words = Word.all
+  end
 end
