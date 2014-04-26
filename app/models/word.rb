@@ -7,7 +7,7 @@ class Word < ActiveRecord::Base
     tamilvu.login("sathia27", "sathia44")
     uploadable.each do |word|
       puts "Uploading word #{word.name} to wikipedia"
-      Uploader::Wiki.new(word).create
+      Uploader::Wiki.new(word, tamilvu).create
     end
   end
 end
