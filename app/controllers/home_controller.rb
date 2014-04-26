@@ -8,7 +8,7 @@ class HomeController < ApplicationController
   end
 
   def scrap_from_tamilvu
-    Scrapper::Tamilvu.new.start
+    Scrapper::Tamilvu.new.delay.start
     redirect_to root_path
   end
 end

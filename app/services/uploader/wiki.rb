@@ -18,4 +18,8 @@ class Uploader::Wiki
       @word.save
     end
   end
+
+  def edit
+    @tamilvu.edit(@word.name, @word.description)
+  end
 end
