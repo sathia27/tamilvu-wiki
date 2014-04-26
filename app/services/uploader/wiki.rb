@@ -1,9 +1,7 @@
-require 'media_wiki'
 class Uploader::Wiki
-  def initialize word
+  def initialize word, tamilvu
     @word = word
-    @tamilvu = MediaWiki::Gateway.new("http://ta.wiktionary.org/w/api.php")
-    @tamilvu.login("sathia27", "sathia44")
+    @tamilvu = tamilvu
   end
 
   def exists?
