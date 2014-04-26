@@ -18,3 +18,5 @@
 database.yml
 
 .idea
+
+vendor/bundle

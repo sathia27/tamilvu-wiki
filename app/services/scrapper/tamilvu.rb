@@ -1,4 +1,5 @@
-class Tamilvu
+require 'open-uri'
+class Scrapper::Tamilvu
 
   def initialize
     @page_start = 1
@@ -9,15 +10,18 @@ class Tamilvu
     (@page_start..@page_end).each do |page_no|
       puts page_no.to_s
       page = Nokogiri::HTML(open("http://www.tamilvu.org/slet/servlet/lexpg?pageno=#{page_no.to_s}"))
+      puts "Found #{page.css("tr[bgcolor='ivory']").count} words"
       page.css("tr[bgcolor='ivory']").each do |word|
         word.css('sup').remove
+        puts "Processing #{word}"
         begin
           w = Word.create(name: word.css('td')[0].text.gsub("\n", '').gsub("\r", ''))
           w.pronunciation = word.css('td')[1].children[0].text
           w.parts_of_speech = word.css('td')[1].children[2].text
           w.description = word.css('td')[1].children[3..-1].text
           w.save!
-        rescue
+        rescue => e
+          puts e.inspect
         end
       end
     end
