@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140426125621) do
+ActiveRecord::Schema.define(version: 20140426141411) do
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20140426125621) do
     t.datetime "updated_at"
   end
 
-  add_index "pos", ["name"], name: "index_pos_on_name", using: :btree
+  add_index "pos", ["name"], name: "index_pos_on_name", unique: true, using: :btree
 
   create_table "word_details", force: true do |t|
     t.integer "word_id"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20140426125621) do
     t.boolean  "uploaded_to_wiki", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "tamil_vu_page_no"
   end
 
   add_index "words", ["existing_in_wiki"], name: "index_words_on_existing_in_wiki", using: :btree

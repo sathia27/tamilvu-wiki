@@ -1,5 +1,8 @@
 class Word < ActiveRecord::Base
   scope :uploadable, ->{ where(:uploaded_to_wiki => false, :existing_in_wiki => false) }
+  scope :uploaded_to_wiki, ->{ where(:uploaded_to_wiki => true) }
+  scope :existing_in_wiki, ->{ where(:existing_in_wiki => true) }
+
   has_many :word_details
 
   def self.upload_to_wiki
@@ -15,7 +18,7 @@ class Word < ActiveRecord::Base
   def wiki_string
     str = ""
     word_details.each do |word|
-      str += "\n" + "{{விளக்கம்}} " + word.description + "\n" + "மொழிபெயர்ப்புகள்" + "<br />" + "{{ஆங்கிலம்}} -" + " - " + word.pronunciation
+      str += "\n" + "{{விளக்கம்}} " + word.description + "\n" + "{{மொழிபெயர்ப்புகள்}}" + "\n" + "{{ஆங்கிலம்}} -" + " - " + word.pronunciation
     end
     str
   end

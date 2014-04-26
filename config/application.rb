@@ -4,7 +4,6 @@ require 'rails/all'
 require 'nokogiri'
 require 'open-uri'
 require 'media_wiki'
-require 'reverse_markdown'
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)

@@ -3,7 +3,7 @@ class Scrapper::Tamilvu
 
   def initialize
     @page_start = 1
-    @page_end = 1
+    @page_end = 5
   end
 
   def start
@@ -15,15 +15,17 @@ class Scrapper::Tamilvu
         word.css('sup').remove
         puts "Processing #{word}"
         begin
-          pos = Pos.find_or_create_by(name: word.css('td')[1].children[2].text)
-          w = Word.create(name: word.css('td')[0].text.gsub("\n", '').gsub("\r", ''))
-          detail = WordDetail.find_or_create_by(word_id: w.id, pos_id: pos.id)
           tag = word.css('td')[1]
+          pos_name = tag.children[2].text.split(".")[0]
+          pos = Pos.find_or_create_by(name: pos_name)
+          title = word.css('td')[0].text.gsub("\n", '').gsub("\r", '')
+          w = Word.find_or_create_by(name: title)
+          w.tamil_vu_page_no = page_no
+          w.save
+          detail = WordDetail.new(word_id: w.id, pos_id: pos.id)
           detail.pronunciation = tag.children[0].text
-          detail.parts_of_speech = tag.children[2].text
           detail.description = tag.children[3..-1].text.gsub(/[0-9]+[\.|\s]/, "\n#")
-          w.save!
-          detail.save!
+          detail.save
         rescue => e
           puts e.inspect
         end

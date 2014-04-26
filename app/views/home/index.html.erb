@@ -1,4 +1,8 @@
+<h2>TamilVu <=> Wikipedia</h2>
 <div id = "center-links">
   <%= link_to "Start scrapping", home_scrap_from_tamilvu_path, :class => "btn btn-primary btn-lg", :method => :post  %>
   <%= link_to "Upload to Wikipedia", home_upload_to_wiki_path, :class => "btn btn-primary btn-lg", :method => :post %>
 </div>
+<p>Total words scrapped from tamilvu.org is <%= @word_count %>. <%= link_to "List", "#" %></p>
+<p>Word already in wikipedia and tamilvu.org is <%= @wiki_tamilvu %>. <%= link_to "List", "#" %></p>  
+<p>Total words uploaded to wikipedia is <%= @words_uploaded %>. <%= link_to "List", "#" %></p>
