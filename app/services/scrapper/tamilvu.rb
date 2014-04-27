@@ -2,8 +2,9 @@ require 'open-uri'
 class Scrapper::Tamilvu
 
   def initialize
-    @page_start = 1
-    @page_end = 5
+    start_page = Word.maximum("tamil_vu_page_no")
+    @page_start = start_page ? start_page : 1
+    @page_end = start_page+100
   end
 
   def start

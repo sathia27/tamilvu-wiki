@@ -1,18 +1,21 @@
+<h3>Total words <%= @total_words %></h3>
+<%= paginate @words %>
 <table class="table table-hover table-bordered">
   <thead>
   <tr>
     <th>Word</th>
-    <th>Uploaded to Wiktionary</th>
-    <th>Wiktionary Link</th>
+    <th>Wiki link</th>
+    <th>Tamil vu link</th>
   </tr>
   </thead>
   <tbody>
   <% @words.each do |w| %>
     <tr>
       <th><%= w.name %></th>
-      <th><%= w.uploaded_to_wiki %></th>
-      <th><%= link_to "https://ta.wiktionary.org/wiki/#{w.name}", "https://ta.wiktionary.org/wiki/#{w.name}"  %></th>
+      <th><%= (w.uploaded_to_wiki or w.existing_in_wiki) ? (link_to "Show", "https://ta.wiktionary.org/wiki/#{w.name}") : "Not uploaded" %></th>
+      <th><%= link_to "Show", "http://www.tamilvu.org/slet/servlet/lexpg?pageno=#{w.tamil_vu_page_no}", :target => :_blank  %></th>
     </tr>
   <% end %>
   </tbody>
 </table>
+<%= paginate @words %>

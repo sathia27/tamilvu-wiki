@@ -1,7 +1,37 @@
+<% if(@scrapping_task || @uploading_task) %>
+  <p class="bg-danger">You cannot start a new process until its corresponding running process is complete</p>
+<% end %>
 <div id = "center-links">
-  <%= link_to "Start scrapping", home_scrap_from_tamilvu_path, :class => "btn btn-primary btn-lg", :method => :post  %>
-  <%= link_to "Upload to Wikipedia", home_upload_to_wiki_path, :class => "btn btn-primary btn-lg", :method => :post %>
+  <%= link_to "Start scrapping", home_scrap_from_tamilvu_path, :class => "btn btn-primary btn-lg" + (@scrapping_task ? " disabled" : "") , :method => :post  %>
+  <%= link_to "Upload to Wikipedia", home_upload_to_wiki_path, :class => "btn btn-primary btn-lg" + (@uploading_task ? " disabled" : ""), :method => :post %>
 </div>
-<p>Total words scrapped from tamilvu.org is <%= @word_count %>. <%= link_to "List", "#" %></p>
-<p>Word already in wikipedia and tamilvu.org is <%= @wiki_tamilvu %>. <%= link_to "List", "#" %></p>  
-<p>Total words uploaded to wikipedia is <%= @words_uploaded %>. <%= link_to "List", "#" %></p>
+<% if(@scrapping_task || @uploading_task) %>
+  <p> 
+    <% if(@scrapping_task) %>
+      <%= link_to "stop scrapping", stop_process_path(:type => "Scrapper::Tamilvu"), :class => "btn btn-sm btn-danger" %>
+    <% end %>
+      <% if(@uploading_task) %>
+      <%= link_to "stop uploading", stop_process_path(:type => "upload_to_wiki"), :class => "btn btn-sm btn-danger" %>
+    <% end %>
+  </p>
+<% end %>
+<p>Total words scrapped from tamilvu.org is <span class="badge word_count"><%= @word_count %></span>. <%= link_to "List", words_path %></p>
+<p>Word already in wikipedia and tamilvu.org is <span class="badge existing_in_wiki"><%= @wiki_tamilvu %></span>. <%= link_to "List", words_path(:type => "existing_in_wiki") %></p>  
+<p>Total words uploaded to wikipedia is <span class="badge uploaded_to_wiki"><%= @words_uploaded %></span>. <%= link_to "List", words_path(:type => "uploaded_to_wiki") %></p>
+<script>
+setInterval(function(){update_word_count()},3000);
+function update_word_count(){
+  $.ajax({
+    url: "/word_counts.json",
+    success: function(data){
+      for(i in data){
+        old_val = $("span."+i).html();
+        //if(old_val != data[i]){
+          $("span."+i).animate({ backgroundColor: "#a00" }, 1500 )
+        //}
+        $("span."+i).html(data[i]);
+      }
+    }
+  })
+}
+</script>
