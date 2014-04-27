@@ -3,8 +3,8 @@ class Scrapper::Tamilvu
 
   def initialize
     start_page = Word.maximum("tamil_vu_page_no")
-    @page_start = start_page ? start_page : 1
-    @page_end = start_page+100
+    @page_start = start_page || 1
+    @page_end = @page_start+100
   end
 
   def start
